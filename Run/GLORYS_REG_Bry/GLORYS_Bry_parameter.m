@@ -1,15 +1,15 @@
 % Time and coordinate control
 %--------------------------------------------------------------------------
-title       = 'BYECS';
-time_begin  = [2020 1 1 0 0 0];
-time_end    = [2021 1 1 0 0 0];
+title       = 'NESS';
+time_begin  = [2026 2 20 0 0 0];
+time_end    = [2026 2 25 0 0 0];
 obc         = [1 1 1 1];
-theta_s     = 4.5;
-theta_b     = 1.5;
-hc          = 5;
-layer_N     = 30;       
+theta_s     = 6.0;
+theta_b     = 2.0;
+hc          = 250;
+layer_N     = 40;
 %--------------------------------------------------------------------------
-Data_dir    = ['E:\Data\GLORYS\glorys_reanalysis'];
+Data_dir    = ['F:\Data\GLORYS\glorys_reanalysis'];
 IF_Separate = 1;
 add_to_ssh  = 'zos_';
 add_to_temp = 'thetao_';

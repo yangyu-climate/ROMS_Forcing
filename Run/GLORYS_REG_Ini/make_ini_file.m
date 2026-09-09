@@ -82,10 +82,10 @@ if ~isempty(filename)
     V     = squeeze(nc{'v'}(:));
     close(nc)
     
-    Z_U   = interp2(lonr,latr,zeta,lonu,latu);
-    Z_V   = interp2(lonr,latr,zeta,lonv,latv);
-    H_U   = interp2(lonr,latr,h   ,lonu,latu);
-    H_V   = interp2(lonr,latr,h   ,lonv,latv);
+    Z_U   = griddata(lonr,latr,zeta,lonu,latu);
+    Z_V   = griddata(lonr,latr,zeta,lonv,latv);
+    H_U   = griddata(lonr,latr,h   ,lonu,latu);
+    H_V   = griddata(lonr,latr,h   ,lonv,latv);
     
     % Temp & Salt
     for i=1:size(zeta,1)

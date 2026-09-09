@@ -11,5 +11,7 @@ nccreate(frcname,'ssh'        ,'Dimensions',{'xi_rho',Lp ,'eta_rho',Mp          
 nccreate(frcname,'temp'       ,'Dimensions',{'xi_rho',Lp ,'eta_rho',Mp,'s_rho' ,N},'Datatype','double')
 nccreate(frcname,'salt'       ,'Dimensions',{'xi_rho',Lp ,'eta_rho',Mp,'s_rho' ,N},'Datatype','double')
 nccreate(frcname,'var'        ,'Dimensions',{'xi_rho',Lp ,'eta_rho',Mp,'s_rho' ,N},'Datatype','double')
+nccreate(frcname,'u_eastward' ,'Dimensions',{'xi_rho',Lp ,'eta_rho',Mp,'s_rho' ,N},'Datatype','double')
+nccreate(frcname,'v_northward','Dimensions',{'xi_rho',Lp ,'eta_rho',Mp,'s_rho' ,N},'Datatype','double')
 
 end

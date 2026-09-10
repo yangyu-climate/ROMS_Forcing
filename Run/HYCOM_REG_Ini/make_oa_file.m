@@ -23,6 +23,8 @@ lonu        = ncload_2D(grd_file,'lon_u');
 latu        = ncload_2D(grd_file,'lat_u');
 lonv        = ncload_2D(grd_file,'lon_v');
 latv        = ncload_2D(grd_file,'lat_v');
+angleNC     = ncload_2D(grd_file,'angle');
+angle(:,:,1)= angleNC';
 [Mp,Lp]     = size(h);
 L           = Lp-1;
 M           = Mp-1;
@@ -212,7 +214,7 @@ if ~isempty(filename)
     lon_nam   = 'lon';   
     lat_nam   = 'lat';    
     dep_nam   = 'depth';    
-    wrt_nam   = 'u'; 
+    wrt_nam   = 'u_eastward'; 
     [X,Y,V]   = ncload_3D_select(fileN,var_nam,lon_nam,lat_nam,dep_nam,lon_lim,lat_lim);    
     [X,Y]     = meshgrid(X,Y);   
     for layer = 1:size(V,1)
@@ -225,7 +227,7 @@ if ~isempty(filename)
         x         = x(loc);
         y         = y(loc);
         var       = var(loc);
-        var_s(:,:,layer)= griddata(x,y,var,lonu,latu)';
+        var_s(:,:,layer)= griddata(x,y,var,lonr,latr)';
         else
         var_s(:,:,layer)= NaN;
         end
@@ -243,7 +245,7 @@ if ~isempty(filename)
     lon_nam   = 'lon';    
     lat_nam   = 'lat';    
     dep_nam   = 'depth';   
-    wrt_nam   = 'v';   
+    wrt_nam   = 'v_northward';   
     [X,Y,V]   = ncload_3D_select(fileN,var_nam,lon_nam,lat_nam,dep_nam,lon_lim,lat_lim);    
     [X,Y]     = meshgrid(X,Y);   
     for layer = 1:size(V,1)
@@ -256,13 +258,23 @@ if ~isempty(filename)
         x         = x(loc);
         y         = y(loc);
         var       = var(loc);
-        var_s(:,:,layer)= griddata(x,y,var,lonv,latv)';
+        var_s(:,:,layer)= griddata(x,y,var,lonr,latr)';
         else
         var_s(:,:,layer)= NaN;
         end
     end   
     ncwrite(S_file,wrt_nam,var_s)   
     clear x y var var_s
+
+    % U&V Rotation
+    u_east  = ncread(S_file,'u_eastward');
+    v_north = ncread(S_file,'v_northward');
+    u_roms  = u_east.*cos(angle)+v_north.*sin(angle);
+    v_roms  =-u_east.*sin(angle)+v_north.*cos(angle);
+    u_roms  =(u_roms(1:end-1,:,:)+u_roms(2:end,:,:))/2;
+    v_roms  =(v_roms(:,1:end-1,:)+v_roms(:,2:end,:))/2;
+    ncwrite(S_file,'u',u_roms)
+    ncwrite(S_file,'v',v_roms)
     
 end
 
